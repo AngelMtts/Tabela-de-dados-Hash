@@ -1,0 +1,26 @@
+from faker import Faker
+import pandas as pd
+
+# Inicializar Faker
+fake = Faker('pt_BR')
+
+# Gerar dados falsos para exemplo
+data = {
+    'nome': [fake.name() for _ in range(10)],
+    'matricula': [fake.random_number(digits=8, fix_len=True) for _ in range(10)]
+}
+
+# Criar um DataFrame pandas com os dados falsos
+df = pd.DataFrame(data)
+
+# Converter pandas DataFrame para Spark DataFrame
+spark_df = spark.createDataFrame(df)
+
+#No SQL 
+
+SELECT 
+    nome, 
+    matricula,
+    sha2(CAST(matricula AS STRING), 256) AS matricula_hashed 
+FROM 
+    academia_inovacao.teste_de_programa.fake_data;
